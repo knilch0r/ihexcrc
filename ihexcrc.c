@@ -1,5 +1,6 @@
 #include "crc32.h"
 #include <stdio.h>
+#include <string.h>
 
 typedef unsigned char ui8;
 
@@ -37,16 +38,25 @@ static int parsebyte(ui8 * dest, ui8 a, ui8 b)
 
 int main(int argc, char**argv)
 {
+    int verbose = 0;
     unsigned crc;
     ui8 linebuf[BUFSZ] = {0};
     unsigned lineno = 0;
 
     if (argc > 1)
     {
-        (void) argv; /* we don't actually care what arguments we're given */
-        puts("calculate CRC32 over all data records of an intel hex file\n");
-        puts("usage:\n\tihexcrc < hexfile > crcfile");
-        return 1;
+        if (!strcmp(argv[1],"-v"))
+        {
+            verbose = 1;
+        }
+        else
+        {
+            /* all other arguments are a cry for help */
+            puts("calculate CRC32 over all data records of an intel hex file\n");
+            puts("usage:\n\tihexcrc [-v] < hexfile > crcfile\n");
+            puts("options:\n\t-v\tbe verbose.");
+            return 1;
+        }
     }
 
     /* parse intel hex records:
@@ -95,12 +105,12 @@ int main(int argc, char**argv)
         }
         if (rectype != 0)
         {
-            fprintf(stderr, "line %u ignored: irrelevant record type %02x\n", lineno, rectype);
+            if (verbose) fprintf(stderr, "line %u ignored: irrelevant record type %02x\n", lineno, rectype);
             continue;
         }
         if (reclen == 0)
         {
-            fprintf(stderr, "line %u ignored: zero lenght data record\n", lineno);
+            if (verbose) fprintf(stderr, "line %u ignored: zero lenght data record\n", lineno);
             continue;
         }
         /* if we ended up here, we've got a data record. we now read <reclen> data bytes,

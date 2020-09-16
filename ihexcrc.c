@@ -131,6 +131,6 @@ int main(int argc, char**argv)
     }
     crc = final_crc32(crc);
 
-    printf("0x%08X\n", crc);
+    printf("0x%08X", crc);
     return 0;
 }

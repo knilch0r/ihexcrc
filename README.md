@@ -1,6 +1,6 @@
 # ihexcrc
 ## CRC32 for Intellec Hex files
-![](https://github.com/knilch0r/ihexcrc/workflows/C/C++%20CI/badge.svg)
+![C/C++ CI](https://github.com/knilch0r/ihexcrc/workflows/C/C++%20CI/badge.svg)
 
 ## What it does
 

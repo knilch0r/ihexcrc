@@ -1,6 +1,7 @@
 # ihexcrc
 ## CRC32 for Intellec Hex files
 ![C/C++ CI](https://github.com/knilch0r/ihexcrc/workflows/C/C++%20CI/badge.svg)
+![Lint Code Base](https://github.com/knilch0r/ihexcrc/workflows/Lint%20Code%20Base/badge.svg)
 
 ## What it does
 
@@ -12,13 +13,13 @@ input files of automotive-grade software deployment tools.
 
 ## Usage
 
-```
+```bash
 ihexcrc < myfile.hex > myfile.crc
 ```
 
 ## Expert usage
 
-```
+```bash
 ihexcrc -v < myfile.hex
 ```
 prints verbose output for every line that is ignored because it is not a data record.
@@ -26,13 +27,13 @@ prints verbose output for every line that is ignored because it is not a data re
 ## Building from source
 
 Clone the repository, then run
-```
+```bash
 make
 ```
 
 ## Running the test suite
 
-```
+```bash
 make test
 ```
 

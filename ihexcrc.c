@@ -121,7 +121,7 @@ int main(int argc, char**argv)
             ui8 data;
             if (!parsebyte(&data, linebuf[9+i*2], linebuf[10+i*2]))
             {
-                fprintf(stderr, "line %u: could not parse data item byte %d, aborting %x\n", lineno, i, data);
+                fprintf(stderr, "line %u: could not parse data item byte %d, aborting\n", lineno, i);
                 return 3;
             }
             crc = update_crc32(data, crc);

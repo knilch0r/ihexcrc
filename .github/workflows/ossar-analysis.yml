@@ -37,6 +37,9 @@ jobs:
     #   with:
     #     dotnet-version: '3.1.x'
 
+    - name: build binary
+      run: make
+
       # Run open source static analysis tools
     - name: Run OSSAR
       uses: github/ossar-action@v1

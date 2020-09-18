@@ -2,6 +2,7 @@
 ## CRC32 for Intellec Hex files
 ![C/C++ CI](https://github.com/knilch0r/ihexcrc/workflows/C/C++%20CI/badge.svg)
 ![Lint Code Base](https://github.com/knilch0r/ihexcrc/workflows/Lint%20Code%20Base/badge.svg)
+![CodeQL](https://github.com/knilch0r/ihexcrc/workflows/CodeQL/badge.svg)
 
 ## What it does
 

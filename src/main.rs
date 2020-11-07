@@ -24,16 +24,14 @@ fn main() {
      * ':' RECORD MARK, 'll' RECLEN, 'aaaa' LOAD OFFSET, 'rr' RECTYP, 'dd...' DATA, 'cc' CHKSUM
      * we only use data records (rr == "00") and use them in the order they appear (ie we ignore
      * embedded address information). we do check for a valid checksum, however. */
-    let mut lineno = 0;
-    for line in stdin.lock().lines() {
+    for (lineno, line) in stdin.lock().lines().enumerate() {
         let line = line.unwrap();
         let line = line.trim();
-        lineno += 1;
         println!("got: {}", line);
         if line.is_empty() {
             continue;
         }
-        if !(line.starts_with(":")) {
+        if !(line.starts_with(':')) {
             let _ = stderr.write_fmt(format_args!("line {} ignored: unsupported format\n", lineno));
             let _ = stderr.flush();
             continue;

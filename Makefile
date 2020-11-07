@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-O2 -Wall -W
 BIN=ihexcrc.exe
 
-$(BIN): ihexcrc.c crc32.c crc32.h
+$(BIN): ihexcrc.c
 	$(CC) $(CFLAGS) $^ -o $@
 
 clean:

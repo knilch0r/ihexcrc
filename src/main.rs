@@ -1,4 +1,3 @@
-use hex;
 use std::io;
 use std::io::{BufRead, Write};
 

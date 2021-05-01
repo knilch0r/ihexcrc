@@ -35,25 +35,32 @@ fn main() {
         }
         let reclen = hex::decode(line.get(1..3).unwrap_or("x"));
         if reclen.is_err() {
-            eprintln!("line {} ignored: reclen {}", lineno, line.get(1..2).unwrap_or("x"));
+            eprintln!("line {} ignored: reclen '{}'", lineno, line.get(1..3).unwrap_or(""));
             continue;
         }
         let reclen = reclen.unwrap()[0] as usize;
         let _load_offset = hex::decode(line.get(3..7).unwrap_or("x"));
         let rectype = hex::decode(line.get(7..9).unwrap_or("x"));
         if rectype.is_err() {
-            eprintln!("line {} ignored: rectype {}", lineno, line.get(7..9).unwrap_or("x"));
+            eprintln!("line {} ignored: rectype '{}'", lineno, line.get(7..9).unwrap_or(""));
             continue;
         }
-        let rectype = rectype.unwrap_or(b"x".to_vec())[0];
+        let rectype = rectype.unwrap()[0];
         if rectype != 0 {
             continue;
         }
         if reclen == 0 {
             continue;
         }
-        let data = hex::decode(line.get(9..(9+reclen*2)).unwrap_or("x")).unwrap();
-        for b in data {
+        let data = hex::decode(line.get(9..(9+reclen*2)).unwrap_or("x"));
+        if data.is_err() {
+            eprintln!("line {} ignored: data '{}' (expected len {})",
+                      lineno,
+                      line.get(9..(9+reclen*2)).unwrap_or(""),
+                      reclen);
+            continue;
+        }
+        for b in data.unwrap() {
             crc = update_crc32(crc, b);
         }
     }

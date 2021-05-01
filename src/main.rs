@@ -30,17 +30,21 @@ fn main() {
             continue;
         }
         if !(line.starts_with(':')) {
-            eprintln!("line {} ignored: unsupported format\n", lineno);
+            eprintln!("line {} ignored: unsupported format", lineno);
             continue;
         }
         let reclen = hex::decode(line.get(1..3).unwrap_or("x"));
         if reclen.is_err() {
-            eprintln!("line {} ignored: reclen {}\n", lineno, line.get(1..2).unwrap_or("x"));
+            eprintln!("line {} ignored: reclen {}", lineno, line.get(1..2).unwrap_or("x"));
             continue;
         }
         let reclen = reclen.unwrap()[0] as usize;
         let _load_offset = hex::decode(line.get(3..7).unwrap_or("x"));
         let rectype = hex::decode(line.get(7..9).unwrap_or("x"));
+        if rectype.is_err() {
+            eprintln!("line {} ignored: rectype {}", lineno, line.get(7..9).unwrap_or("x"));
+            continue;
+        }
         let rectype = rectype.unwrap_or(b"x".to_vec())[0];
         if rectype != 0 {
             continue;

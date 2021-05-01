@@ -1,12 +1,10 @@
-CC=gcc
-CFLAGS=-O2 -Wall -W
-BIN=ihexcrc.exe
+.PHONY: all clean test
 
-$(BIN): ihexcrc.c
-	$(CC) $(CFLAGS) $^ -o $@
+all: src/main.rs
+	cargo build -vv
 
 clean:
-	rm -f $(BIN)
+	cargo clean
 
 test: ihexcrc.exe
 	FAIL=0; for t in tests/*.hex ; do \

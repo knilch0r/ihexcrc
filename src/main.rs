@@ -35,14 +35,14 @@ fn main() {
         }
         let reclen = hex::decode(line.get(1..3).unwrap_or("x"));
         if reclen.is_err() {
-            eprintln!("line {} ignored: reclen '{}'", lineno, line.get(1..3).unwrap_or(""));
+            eprintln!("line {} ignored: reclen invalid at '{}'", lineno, line.get(1..).unwrap_or(""));
             continue;
         }
         let reclen = reclen.unwrap()[0] as usize;
         let _load_offset = hex::decode(line.get(3..7).unwrap_or("x"));
         let rectype = hex::decode(line.get(7..9).unwrap_or("x"));
         if rectype.is_err() {
-            eprintln!("line {} ignored: rectype '{}'", lineno, line.get(7..9).unwrap_or(""));
+            eprintln!("line {} ignored: rectype invalid at '{}'", lineno, line.get(7..).unwrap_or(""));
             continue;
         }
         let rectype = rectype.unwrap()[0];
@@ -54,10 +54,8 @@ fn main() {
         }
         let data = hex::decode(line.get(9..(9+reclen*2)).unwrap_or("x"));
         if data.is_err() {
-            eprintln!("line {} ignored: data '{}' (expected len {})",
-                      lineno,
-                      line.get(9..(9+reclen*2)).unwrap_or(""),
-                      reclen);
+            eprintln!("line {} ignored: data invalid at '{}' (expected len {})",
+                      lineno, line.get(9..).unwrap_or(""), reclen);
             continue;
         }
         for b in data.unwrap() {

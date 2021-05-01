@@ -1,5 +1,5 @@
 use std::io;
-use std::io::{BufRead, Write};
+use std::io::{BufRead};
 
 fn init_crc32() -> u32 {
     !0
@@ -15,7 +15,6 @@ fn final_crc32(crc: u32) -> u32 {
 
 fn main() {
     let stdin = io::stdin();
-    let mut stderr = io::stderr();
     let mut crc = init_crc32();
 
     /* parse intel hex records:
@@ -31,20 +30,18 @@ fn main() {
             continue;
         }
         if !(line.starts_with(':')) {
-            let _ = stderr.write_fmt(format_args!("line {} ignored: unsupported format\n", lineno));
-            let _ = stderr.flush();
+            eprintln!("line {} ignored: unsupported format\n", lineno);
             continue;
         }
         let reclen = hex::decode(line.get(1..3).unwrap_or("x"));
         if reclen.is_err() {
-            let _ = stderr.write_fmt(format_args!("line {} ignored: reclen {}\n", lineno, line.get(1..2).unwrap_or("x")));
-            let _ = stderr.flush();
+            eprintln!("line {} ignored: reclen {}\n", lineno, line.get(1..2).unwrap_or("x"));
             continue;
         }
         let reclen = reclen.unwrap()[0] as usize;
         let _load_offset = hex::decode(line.get(3..7).unwrap_or("x"));
         let rectype = hex::decode(line.get(7..9).unwrap_or("x"));
-        let rectype = rectype.unwrap()[0];
+        let rectype = rectype.unwrap_or(b"x".to_vec())[0];
         if rectype != 0 {
             continue;
         }

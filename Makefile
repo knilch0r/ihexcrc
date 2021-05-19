@@ -9,7 +9,7 @@ clean:
 	rm -f $(BIN)
 
 test: ihexcrc.exe
-	FAIL=0; set -o pipefail ; for t in tests/*.hex ; do \
+	FAIL=0; for t in tests/*.hex ; do \
 	   echo -n 'testing '"$$t"': '; \
 	   if ./$(BIN) < $$t | diff -u - tests/`basename $$t .hex`.crc ; then \
 	      echo PASSED ; \
